@@ -17,10 +17,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final TextEditingController jogadoresController = TextEditingController();  
+  final TextEditingController equipesController = TextEditingController(); 
   
   List<String> jogadores = [];
   String? jogadorDeletado;
   int?posJogadorDeletado;
+  List<String>? jogadoresDeletados;  
+  int qtdEquipes = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +34,24 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     String text;
+    
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(widget.title),   
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete),   
+            onPressed: ()=>{
+              setState(() {
+                onDeleteAll();
+              }),              
+            },
+          ), 
+                              
+        ],     
       ),
 
       // ignore: prefer_const_constructors
@@ -52,8 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: TextField(
                       controller: jogadoresController,
                       decoration: const InputDecoration(
-                        labelText: "Jogadores",
-                        hintText: "Nome do perna de pau",
+                        labelText: "Jogador",
+                        hintText: "Perna de pau",
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -79,6 +95,24 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],    
               ),
+              const SizedBox(height: 8),
+              Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                    child: TextField(
+                      controller: equipesController,
+                      decoration: const InputDecoration(
+                        labelText: "Equipes",
+                        hintText: "Quantidade de equipes",                        
+                        //border: OutlineInputBorder(),                        
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                  const SizedBox(width: 8),                
+                ],    
+              ),
               const SizedBox(height: 16),
               Flexible(
                 child: ListView(
@@ -86,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     for(String jogador in jogadores)
                       ListJogadores(
+                        index: jogadores.indexOf(jogador),
                         jogador: jogador,
                         onDelete: onDelete,
                       ),
@@ -98,9 +133,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: ()=>{
-          Navigator.push(context,
-           MaterialPageRoute(builder: (context)=>TimesSorteados(jogadores: jogadores,))),
+        onPressed: ()=>{                     
+          
+          //if ((equipesController.text!) > 1) {
+
+            jogadores.shuffle(),
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context)=>TimesSorteados(jogadores: jogadores,))),
+          //}
+          //else{
+          //  _showDialog("Atencao","deve-se informar quantidade de equipes maior do que 1!"),
+         // }
+          
+
+
         },
         tooltip: 'Sortear Equipes',
         child: const Icon(Icons.sports_soccer_sharp),
@@ -120,8 +166,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'jogador ${jogador} foi removido com sucesso!',
-          style: TextStyle(color: Colors.blue),
+          'jogador $jogador foi removido com sucesso!',
+          style: const TextStyle(color: Colors.blue),
         ),
         backgroundColor: Colors.white,    
         action: SnackBarAction(
@@ -134,7 +180,61 @@ class _MyHomePageState extends State<MyHomePage> {
         ),  
       ),
     );
+  }
 
+  void onDeleteAll(){
+    
+    //jogadorDeletado = jogador;
+    //posJogadorDeletado = jogadores.indexOf(jogador);
+    if (jogadores.isNotEmpty){
+      jogadoresDeletados = jogadores;
+      jogadores = [];
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text(
+            'jogadores foram removidos com sucesso!',
+            style: TextStyle(color: Colors.blue),
+          ),
+          backgroundColor: Colors.white,    
+          action: SnackBarAction(
+            label: 'Desfazer',
+            onPressed:() {
+              setState(() {
+                jogadores = jogadoresDeletados!;
+              });
+            },
+          ),  
+        ),
+      );
+
+    }else{
+      _showDialog("Atencao","Nao existe nenhum jogador adicionado na lista para ser excluido!");
+    }
+    
+
+  }
+
+  void _showDialog(String ctit,String cmsg) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // retorna um objeto do tipo Dialog
+        return AlertDialog(
+          title: Text(ctit),
+          content: Text(cmsg),
+            actions: <Widget>[
+              // define os botões na base do dialogo
+              TextButton (
+                child: const Text("Fechar"),
+                onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
 }

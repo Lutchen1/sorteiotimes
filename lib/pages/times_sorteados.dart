@@ -19,7 +19,7 @@ class TimesSorteados extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Item ${jogadores[index]}'),
+                child: Text('${jogadores[index]}'),
               ),
             ],
           );
