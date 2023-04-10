@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:share/share.dart';
+import 'package:share/share.dart';
 
 class TimesSorteados extends StatelessWidget {
   final times;
@@ -27,7 +27,7 @@ class TimesSorteados extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: ()=>{
-          //Share.share('Conteúdo da tabela aqui'),
+          Share.share('Conteúdo da tabela aqui'),
         },
         tooltip: 'Compartilhar',
         child: const Icon(Icons.share),

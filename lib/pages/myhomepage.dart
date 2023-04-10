@@ -42,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     int qtdEquipes = 0;
     //List<String> equipes = [];
     List<String> times = [];   
+    int nivel = 0;
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -128,8 +129,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       ListJogadores(
                         index: jogadores.indexOf(jogador),
                         jogador: jogador,
-                        onDelete: onDelete,
-                      ),
+                        nivel: nivel,
+                        onDelete: onDelete,                        
+                      ),                    
                   ],
                 ),
               ),  
@@ -256,27 +258,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> separarTimes(List<String> jogadores, int numTimes) {
 
-  List<String> times = [];
-  //final numJogadoresPorTime = (jogadores.length / numTimes).ceil();
-  final random = Random();
+    List<String> times = [];
+    //final numJogadoresPorTime = (jogadores.length / numTimes).ceil();
+    final random = Random();
 
-  jogadores.shuffle(random);
-  final timesAux = List.generate(numTimes, (_) => <String>[]);
+    jogadores.shuffle(random);
+    final timesAux = List.generate(numTimes, (_) => <String>[]);
 
-  for (var i = 0; i < jogadores.length; i++) {
-    final timeIndex = i % numTimes;
-    timesAux[timeIndex].add(jogadores[i]);
+    for (var i = 0; i < jogadores.length; i++) {
+      final timeIndex = i % numTimes;
+      timesAux[timeIndex].add(jogadores[i]);
+    }
+
+    for (var i = 0; i < timesAux.length; i++){
+      
+      times.add('EQUIPE ${i+1}');
+      for (var j = 0; j < timesAux[i].length; j++){
+        times.add(timesAux[i][j]);
+      }  
+    }
+    return times;
   }
-
-  for (var i = 0; i < timesAux.length; i++){
-    
-    times.add('EQUIPE ${i+1}');
-    for (var j = 0; j < timesAux[i].length; j++){
-      times.add(timesAux[i][j]);
-    }  
-  }
-  return times;
-}
 
 
 
