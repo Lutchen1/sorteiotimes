@@ -1,4 +1,7 @@
 //import 'dart:js_util';
+//import 'dart:js_util';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:sorteiotimes/pages/times_sorteados.dart';
 import 'package:sorteiotimes/widgets/lista_jogadores.dart';
@@ -22,8 +25,8 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> jogadores = [];
   String? jogadorDeletado;
   int?posJogadorDeletado;
-  List<String>? jogadoresDeletados;  
-  int qtdEquipes = 0;
+  List<String>? jogadoresDeletados;
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
     String text;
     
 
+    int qtdEquipes = 0;
+    //List<String> equipes = [];
+    List<String> times = [];   
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -57,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // ignore: prefer_const_constructors
       body:Center(
         child:Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(16,16,16,80),
           child: Column(
             //mainAxisSize: MainAxisSize.min,
             children: [
@@ -107,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         hintText: "Quantidade de equipes",                        
                         //border: OutlineInputBorder(),                        
                       ),
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.number,                      
                     ),
                   ),
                   const SizedBox(width: 8),                
@@ -133,20 +139,31 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: ()=>{                     
-          
-          //if ((equipesController.text!) > 1) {
+        onPressed: ()=>{                               
 
-            jogadores.shuffle(),
-            Navigator.push(context,
-            MaterialPageRoute(builder: (context)=>TimesSorteados(jogadores: jogadores,))),
-          //}
-          //else{
-          //  _showDialog("Atencao","deve-se informar quantidade de equipes maior do que 1!"),
-         // }
-          
+          if (equipesController.text.isNotEmpty) {
 
+            qtdEquipes = int.tryParse(equipesController.text)!,
 
+            if (qtdEquipes > 1){
+
+              //for (var i = 1; i < qtdEquipes; i++) {
+               // equipes.add('Equipe $i'),
+              //},           
+
+              times = separarTimes(jogadores,qtdEquipes,),
+
+              //jogadores.shuffle(),
+              Navigator.push(context,
+              MaterialPageRoute(builder: (context)=>TimesSorteados(times: times,))),
+            }
+            else{
+              _showDialog("Atencao","deve-se informar quantidade de equipes maior do que 1!"),
+            }
+          }   
+          else{
+            _showDialog("Atencao","deve-se informar o campo quantidade de equipes!"),
+          }       
         },
         tooltip: 'Sortear Equipes',
         child: const Icon(Icons.sports_soccer_sharp),
@@ -236,5 +253,31 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
   }
+
+  List<String> separarTimes(List<String> jogadores, int numTimes) {
+
+  List<String> times = [];
+  //final numJogadoresPorTime = (jogadores.length / numTimes).ceil();
+  final random = Random();
+
+  jogadores.shuffle(random);
+  final timesAux = List.generate(numTimes, (_) => <String>[]);
+
+  for (var i = 0; i < jogadores.length; i++) {
+    final timeIndex = i % numTimes;
+    timesAux[timeIndex].add(jogadores[i]);
+  }
+
+  for (var i = 0; i < timesAux.length; i++){
+    
+    times.add('EQUIPE ${i+1}');
+    for (var j = 0; j < timesAux[i].length; j++){
+      times.add(timesAux[i][j]);
+    }  
+  }
+  return times;
+}
+
+
 
 }

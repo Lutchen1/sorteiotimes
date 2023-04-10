@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+//import 'package:share/share.dart';
 
 class TimesSorteados extends StatelessWidget {
-  final jogadores;
+  final times;
 
-  const TimesSorteados({super.key, required this.jogadores});
+  const TimesSorteados({super.key, required this.times});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +14,12 @@ class TimesSorteados extends StatelessWidget {
       ),
       body: Table(
         border: TableBorder.all(),
-        children: List.generate(jogadores.length, (index) {
+        children: List.generate(times.length, (index) {
           return TableRow(
             children: [
               Container(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('${jogadores[index]}'),
+                child: Text('${times[index]}'),
               ),
             ],
           );
@@ -27,7 +27,7 @@ class TimesSorteados extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: ()=>{
-          Share.share('Conteúdo da tabela aqui'),
+          //Share.share('Conteúdo da tabela aqui'),
         },
         tooltip: 'Compartilhar',
         child: const Icon(Icons.share),
