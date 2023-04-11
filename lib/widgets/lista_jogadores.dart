@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sorteiotimes/pages/myhomepage.dart';
 import 'package:sorteiotimes/widgets/estrela_niveis.dart';
+import '../models/jogadores.dart';
 
 class ListJogadores extends StatelessWidget {
-  const ListJogadores({super.key, required this.index, required this.jogador, required this.nivel, required this.onDelete});
+  const ListJogadores({super.key, required this.jogador, required this.onDelete/*, required this.index, required this.jogador, required this.nivel, required this.onDelete*/});
 
-  final int index;
-  final String jogador;
-  final Function (String jogador) onDelete;
-  final int nivel;
+  final Jogador jogador;
+  //final int index;
+  //final String jogador;
+  final Function (Jogador) onDelete;
+  //final int nivel;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class ListJogadores extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // ignore: prefer_interpolation_to_compose_strings
-              Text((index+1).toString()+'. '+jogador,
+              Text((jogador.nome.indexOf(jogador.nome)+1).toString()+'. '+jogador.nome,
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,                  

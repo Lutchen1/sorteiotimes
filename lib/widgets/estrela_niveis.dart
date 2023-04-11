@@ -36,7 +36,7 @@ class _EstrelaNiveisState extends State<EstrelaNiveis> {
   Widget build(BuildContext context) {
     return Row(
       //mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(widget.maxRating, (index) => _buildStar(index)),
+      children: List.generate(widget.maxRating, (index) => _buildStar(index)),      
     );
   }
 }

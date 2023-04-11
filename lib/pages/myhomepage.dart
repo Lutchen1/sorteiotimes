@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:sorteiotimes/models/jogadores.dart';
 import 'package:sorteiotimes/pages/times_sorteados.dart';
 import 'package:sorteiotimes/widgets/lista_jogadores.dart';
 //import 'package:flutter/src/services/hardware_keyboard.dart'
@@ -22,10 +23,10 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController jogadoresController = TextEditingController();  
   final TextEditingController equipesController = TextEditingController(); 
   
-  List<String> jogadores = [];
-  String? jogadorDeletado;
+  List<Jogador> jogadores = [];
+  Jogador? jogadorDeletado;
   int?posJogadorDeletado;
-  List<String>? jogadoresDeletados;
+  List<Jogador>? jogadoresDeletados;
  
 
   @override
@@ -87,7 +88,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       text = jogadoresController.text,
                       setState(() {
                         if (text != ''){
-                          jogadores.add(text);                                           
+                          
+                          Jogador newJogador = Jogador(
+                            nome: text , 
+                            nivel: 0,
+                          );
+
+                          jogadores.add(newJogador);
+                          //jogadores.add(text);   
+
                         };
                         jogadoresController.clear();     
                       }),            
@@ -125,11 +134,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView(
                 shrinkWrap: true,
                   children: [
-                    for(String jogador in jogadores)
+                    for(Jogador jogador in jogadores)
                       ListJogadores(
-                        index: jogadores.indexOf(jogador),
-                        jogador: jogador,
-                        nivel: nivel,
+                        jogador:jogador,
+                        //index: jogadores.indexOf(jogador),
+                        //jogador: jogador,
+                        //nivel: nivel,
                         onDelete: onDelete,                        
                       ),                    
                   ],
@@ -165,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
           }   
           else{
             _showDialog("Atencao","deve-se informar o campo quantidade de equipes!"),
-          }       
+          } 
         },
         tooltip: 'Sortear Equipes',
         child: const Icon(Icons.sports_soccer_sharp),
@@ -173,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void onDelete(jogador){
+  void onDelete(Jogador jogador){
     
     jogadorDeletado = jogador;
     posJogadorDeletado = jogadores.indexOf(jogador);
@@ -185,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'jogador $jogador foi removido com sucesso!',
+          'jogador ${jogador.nome} foi removido com sucesso!',
           style: const TextStyle(color: Colors.blue),
         ),
         backgroundColor: Colors.white,    
@@ -202,12 +212,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onDeleteAll(){
+
     
-    //jogadorDeletado = jogador;
-    //posJogadorDeletado = jogadores.indexOf(jogador);
     if (jogadores.isNotEmpty){
+      
       jogadoresDeletados = jogadores;
-      jogadores = [];
+      //jogadores = [];
+
+      jogadores.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -215,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
             'jogadores foram removidos com sucesso!',
             style: TextStyle(color: Colors.blue),
           ),
-          backgroundColor: Colors.white,    
+          backgroundColor: Colors.white,  
           action: SnackBarAction(
             label: 'Desfazer',
             onPressed:() {
@@ -223,7 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 jogadores = jogadoresDeletados!;
               });
             },
-          ),  
+          ),
         ),
       );
 
@@ -256,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  List<String> separarTimes(List<String> jogadores, int numTimes) {
+  List<String> separarTimes(List<Jogador> jogadores, int numTimes) {
 
     List<String> times = [];
     //final numJogadoresPorTime = (jogadores.length / numTimes).ceil();
@@ -267,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     for (var i = 0; i < jogadores.length; i++) {
       final timeIndex = i % numTimes;
-      timesAux[timeIndex].add(jogadores[i]);
+      timesAux[timeIndex].add(jogadores[1].nome);
     }
 
     for (var i = 0; i < timesAux.length; i++){
