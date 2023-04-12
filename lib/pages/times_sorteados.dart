@@ -12,18 +12,26 @@ class TimesSorteados extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Times Sorteados"),
       ),
-      body: Table(
-        border: TableBorder.all(),
-        children: List.generate(times.length, (index) {
-          return TableRow(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('${times[index]}'),
-              ),
-            ],
-          );
-        }),
+        body:Center(
+          child:Padding(
+            padding: const EdgeInsets.fromLTRB(16,16,16,80),
+              child:SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child:Table(          
+              border: TableBorder.all(),
+              children: List.generate(times.length, (index) {
+                return TableRow(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text('${times[index]}'),
+                    ),
+                  ],
+                );
+              }),
+            ),
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: ()=>{

@@ -43,13 +43,13 @@ class ListJogadores extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // ignore: prefer_interpolation_to_compose_strings
-              Text((jogador.nome.indexOf(jogador.nome)+1).toString()+'. '+jogador.nome,
+              Text(/*(jogador.nome.indexOf(jogador.nome)+1).toString()+'. '+*/jogador.nome,
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,                  
                 )                                
               ),
-              EstrelaNiveis(onRatingSelected: ( nivel ) { },),              
+              EstrelaNiveis(onRatingSelected: (int ) {  },jogador: jogador),              
             ], 
           ),          
         ),
