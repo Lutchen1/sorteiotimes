@@ -93,9 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             nome: text , 
                             nivel: 0,
                           );
-
-                          jogadores.add(newJogador);
-                          //jogadores.add(text);   
+                          jogadores.add(newJogador); 
 
                         };
                         jogadoresController.clear();     
@@ -137,9 +135,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     for(Jogador jogador in jogadores)
                       ListJogadores(
                         jogador:jogador,
-                        //index: jogadores.indexOf(jogador),
-                        //jogador: jogador,
-                        //nivel: nivel,
                         onDelete: onDelete,                        
                       ),                    
                   ],
@@ -158,14 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
             qtdEquipes = int.tryParse(equipesController.text)!,
 
             if (qtdEquipes > 1){
-
-              //for (var i = 1; i < qtdEquipes; i++) {
-               // equipes.add('Equipe $i'),
-              //},           
-
+          
               times = separarTimes(jogadores,qtdEquipes,),
 
-              //jogadores.shuffle(),
               Navigator.push(context,
               MaterialPageRoute(builder: (context)=>TimesSorteados(times: times,))),
             }
@@ -271,16 +261,72 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> separarTimes(List<Jogador> jogadores, int numTimes) {
 
     List<String> times = [];
+    List<Jogador> jogNv0 = [];
+    List<Jogador> jogNv1 = [];
+    List<Jogador> jogNv2 = [];
+    List<Jogador> jogNv3 = [];
+    List<Jogador> jogNv4 = [];
+    List<Jogador> jogNv5 = [];
     //final numJogadoresPorTime = (jogadores.length / numTimes).ceil();
     final random = Random();
 
-    jogadores.shuffle(random);
+    for (var i = 0; i < jogadores.length; i++){
+        if (jogadores[i].nivel == 0) {
+          jogNv0.add(jogadores[i]);
+        }else if(jogadores[i].nivel == 1) {
+          jogNv1.add(jogadores[i]);
+        }else if(jogadores[i].nivel == 2){
+          jogNv2.add(jogadores[i]);
+        }else if(jogadores[i].nivel == 3){
+          jogNv3.add(jogadores[i]);
+        }else if(jogadores[i].nivel == 4){
+          jogNv4.add(jogadores[i]);
+        }else if(jogadores[i].nivel == 5){
+          jogNv5.add(jogadores[i]);
+        }
+    }
+
+
+    //jogadores.shuffle(random);
+    jogNv0.shuffle(random);
+    jogNv1.shuffle(random);
+    jogNv2.shuffle(random);
+    jogNv3.shuffle(random);
+    jogNv4.shuffle(random);
+    jogNv5.shuffle(random);
+
+
     final timesAux = List.generate(numTimes, (_) => <String>[]);
 
-    for (var i = 0; i < jogadores.length; i++) {
+    for (var i = 0; i < jogNv0.length; i++) {
       final timeIndex = i % numTimes;
-      timesAux[timeIndex].add(jogadores[1].nome);
+      timesAux[timeIndex].add(jogNv0[i].nome);
     }
+
+    for (var i = 0; i < jogNv1.length; i++) {
+      final timeIndex = i % numTimes;
+      timesAux[timeIndex].add(jogNv1[i].nome);
+    }
+
+    for (var i = 0; i < jogNv2.length; i++) {
+      final timeIndex = i % numTimes;
+      timesAux[timeIndex].add(jogNv2[i].nome);
+    }
+
+    for (var i = 0; i < jogNv3.length; i++) {
+      final timeIndex = i % numTimes;
+      timesAux[timeIndex].add(jogNv3[i].nome);
+    }
+
+    for (var i = 0; i < jogNv4.length; i++) {
+      final timeIndex = i % numTimes;
+      timesAux[timeIndex].add(jogNv4[i].nome);
+    }
+
+    for (var i = 0; i < jogNv5.length; i++) {
+      final timeIndex = i % numTimes;
+      timesAux[timeIndex].add(jogNv5[i].nome);
+    }                
 
     for (var i = 0; i < timesAux.length; i++){
       
