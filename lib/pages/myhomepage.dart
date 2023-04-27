@@ -202,29 +202,57 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void onDeleteAll(){
 
-    
     if (jogadores.isNotEmpty){
-      
-      jogadoresDeletados = jogadores;
-      //jogadores = [];
-
-      jogadores.clear();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'jogadores foram removidos com sucesso!',
-            style: TextStyle(color: Colors.blue),
-          ),
-          backgroundColor: Colors.white,
-        ),
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // retorna um objeto do tipo Dialog
+          return AlertDialog(
+            title: const Text("Remover todos Jogadores?"),
+            content: const Text("Deseja excluir todos os jogadores da lista?"),
+              actions: <Widget>[
+                // define os botões na base do dialogo
+                TextButton (
+                  child: const Text("Cancelar"),
+                  onPressed: () {
+                  Navigator.of(context).pop();
+                  },
+                ),
+                TextButton (
+                  onPressed: ()=>{
+                    setState(() {
+                      execDel();
+                      Navigator.of(context).pop();
+                    }),              
+                  },
+                  style: TextButton.styleFrom(primary:Colors.red),
+                  child: const Text("Excluir"),
+                ),              
+            ],
+          );
+        },
       );
-
     }else{
       _showDialog("Atencao","Nao existe nenhum jogador adicionado na lista para ser excluido!");
     }
-    
+  }
 
+  void execDel(){
+    
+    jogadoresDeletados = jogadores;
+    //jogadores = [];
+
+    jogadores.clear();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'jogadores foram removidos com sucesso!',
+          style: TextStyle(color: Colors.blue),
+        ),
+        backgroundColor: Colors.white,
+      ),
+    );
   }
 
   void _showDialog(String ctit,String cmsg) {
