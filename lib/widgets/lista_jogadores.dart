@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:sorteiotimes/pages/myhomepage.dart';
 import 'package:sorteiotimes/widgets/estrela_niveis.dart';
 import '../models/jogadores.dart';
 
@@ -15,9 +14,9 @@ class ListJogadores extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var onRatingSelected;
+  
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 2),       
+      padding: const EdgeInsets.symmetric(vertical: 2),       
       child: Slidable(        
         endActionPane: ActionPane(
           motion: const DrawerMotion(),
@@ -49,6 +48,7 @@ class ListJogadores extends StatelessWidget {
                   fontWeight: FontWeight.w600,                  
                 )                                
               ),
+              // ignore: avoid_types_as_parameter_names
               EstrelaNiveis(onRatingSelected: (int ) {  },jogador: jogador),              
             ], 
           ),          

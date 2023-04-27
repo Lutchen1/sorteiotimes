@@ -41,9 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
     
 
     int qtdEquipes = 0;
-    //List<String> equipes = [];
     List<String> times = [];   
-    int nivel = 0;
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -212,20 +211,12 @@ class _MyHomePageState extends State<MyHomePage> {
       jogadores.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
+        const SnackBar(
+          content: Text(
             'jogadores foram removidos com sucesso!',
             style: TextStyle(color: Colors.blue),
           ),
-          backgroundColor: Colors.white,  
-          action: SnackBarAction(
-            label: 'Desfazer',
-            onPressed:() {
-              setState(() {
-                jogadores = jogadoresDeletados!;
-              });
-            },
-          ),
+          backgroundColor: Colors.white,
         ),
       );
 
@@ -297,36 +288,57 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
     final timesAux = List.generate(numTimes, (_) => <String>[]);
+    var timeIndex = 0;
 
-    for (var i = 0; i < jogNv0.length; i++) {
-      final timeIndex = i % numTimes;
+    for (var i = 0; i < jogNv0.length; i++) {      
       timesAux[timeIndex].add(jogNv0[i].nome);
+      timeIndex += 1; //% numTimes;
+      if (timeIndex == timesAux.length){
+        timeIndex = 0;
+      }
     }
 
+
     for (var i = 0; i < jogNv1.length; i++) {
-      final timeIndex = i % numTimes;
+      timeIndex = i; //% numTimes;
       timesAux[timeIndex].add(jogNv1[i].nome);
+      timeIndex += 1; //% numTimes;
+      if (timeIndex == timesAux.length){
+        timeIndex = 0;
+      }
     }
 
     for (var i = 0; i < jogNv2.length; i++) {
-      final timeIndex = i % numTimes;
       timesAux[timeIndex].add(jogNv2[i].nome);
+      timeIndex += 1; //% numTimes;
+      if (timeIndex == timesAux.length){
+        timeIndex = 0;
+      }
     }
 
     for (var i = 0; i < jogNv3.length; i++) {
-      final timeIndex = i % numTimes;
       timesAux[timeIndex].add(jogNv3[i].nome);
+      timeIndex += 1; //% numTimes;
+      if (timeIndex == timesAux.length){
+        timeIndex = 0;
+      }
     }
 
     for (var i = 0; i < jogNv4.length; i++) {
-      final timeIndex = i % numTimes;
       timesAux[timeIndex].add(jogNv4[i].nome);
+      timeIndex += 1; //% numTimes;
+      if (timeIndex == timesAux.length){
+        timeIndex = 0;
+      }
     }
 
     for (var i = 0; i < jogNv5.length; i++) {
-      final timeIndex = i % numTimes;
       timesAux[timeIndex].add(jogNv5[i].nome);
-    }                
+      timeIndex += 1; //% numTimes;
+      if (timeIndex == timesAux.length){
+        timeIndex = 0;
+      }
+    }          
 
     for (var i = 0; i < timesAux.length; i++){
       

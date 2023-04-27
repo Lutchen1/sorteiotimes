@@ -6,9 +6,10 @@ class EstrelaNiveis extends StatefulWidget {
   final Function(int) onRatingSelected;
   final Jogador jogador;
 
-  EstrelaNiveis({this.maxRating = 5, required this.onRatingSelected, required this.jogador});
+  const EstrelaNiveis({super.key, this.maxRating = 5, required this.onRatingSelected, required this.jogador});
 
   @override
+  // ignore: library_private_types_in_public_api
   _EstrelaNiveisState createState() => _EstrelaNiveisState();
 }
 
@@ -23,9 +24,9 @@ class _EstrelaNiveisState extends State<EstrelaNiveis> {
 
     Icon icon;
     if (index < _currentRating) {
-      icon = Icon(Icons.star, color: Colors.yellow);
+      icon = const Icon(Icons.star, color: Colors.yellow);
     } else {
-      icon = Icon(Icons.star_outline, color: Colors.grey);
+      icon = const Icon(Icons.star_outline, color: Colors.grey);
     }
 
     return GestureDetector(

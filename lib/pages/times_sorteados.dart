@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
 class TimesSorteados extends StatelessWidget {
-  final times;
+  final List times;
 
   const TimesSorteados({super.key, required this.times});
 
